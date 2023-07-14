@@ -1,4 +1,5 @@
 const User = require("../Models/UserModel")
+const Task = require("../Models/TaskModel")
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
 
@@ -76,3 +77,63 @@ module.exports.Login = async (req, res, next) => {
         console.error(error);
     }
 } 
+
+
+
+
+
+
+module.exports.createTask = async (req, res) => {
+    try {
+        console.log("SPOT1")
+        console.log(req.body)
+        const { task_title, priority, category, hours } = req.body;
+        console.log(task_title)
+        // console.log(req.user)
+        // console.log(req.cookies)
+       
+        // // TRIAL FOR USER VERIFICATION
+        // const token = req.cookies.token;
+        // if (!token) {
+        //     return res.json({ status: false })
+        // }
+        // jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+        // if (err) {
+        //     return res.json({ status: false })
+        // }
+        // else{
+        //     const user = await User.findById(data.id);
+        //     if (user) return res.json({ status: true, user: user.username, email: user.email })
+        //     else return res.json({ status: false })
+        //     }
+        // })
+
+
+
+
+
+
+        // // const { userId } = req.user; // Assuming you have the authenticated user's ID in the req.user object
+        // const params = JSON.parse(req)
+        // console.log(params)
+        // userId = params.id;
+        // const user = await User.findById(userId).select("-password");
+        // console.log(userId)
+        console.log("IN THE CREATE TASK SERVER FUNCTION")
+        const task = await Task.create({
+            task_title,
+            priority,
+            category,
+            hours,  
+            // user: userId,
+        });
+
+        res.status(201).json(task);
+        
+    }
+    catch (error) {
+        console.log("Unable to create task")
+        res.status(500).json({ error: 'Unable to create task' });
+    }
+
+};

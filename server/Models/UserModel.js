@@ -30,3 +30,17 @@ userSchema.pre("save", async function (){
 })
 
 module.exports = mongoose.model("User", userSchema);
+
+
+
+// Task model
+// const taskSchema = new mongoose.Schema({
+//     task_title: String,
+//     // description: String,
+//     priority: Number,
+//     hours: Number,
+//     category: String,
+//     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+//   });
+  
+// const Task = mongoose.model('Task', taskSchema);

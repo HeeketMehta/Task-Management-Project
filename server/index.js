@@ -5,7 +5,7 @@ const app = express();
 const authRoute = require("./Routes/AuthRoute");
 const cookieParser = require("cookie-parser");
 
-const PORT = 4000;
+const PORT = 5050;
 const MONGO_URL = "mongodb+srv://task_manager:pass@cluster0.66uuoq3.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URL, {
@@ -26,6 +26,10 @@ app.use(
     credentials: true,
   })
 );
+
+// app.get('/test', (req, res) => {
+//   res.json(req.user);
+// });
 
 app.use(cookieParser());
 
