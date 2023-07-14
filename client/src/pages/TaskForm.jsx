@@ -8,17 +8,19 @@ const TaskForm = ({ createTask }) => {
   const [priority, setPriority] = useState('');
   const [category, setCategory] = useState('');
   const [hours, setHours] = useState('');
+  const [email, setEmail] = useState('');
 
   // console.log("IN THE TaskForm.jsx file, TITLE IS  --- ", task_title);
 
   const handleSubmit = (e) => {
     
     e.preventDefault();
-    createTask(task_title,priority,category,hours);
+    createTask(task_title,priority,category,hours, email);
     setTitle('');
     setPriority('');
     setCategory('');
     setHours('');
+    setEmail('');
     
   };
 
@@ -56,6 +58,14 @@ const TaskForm = ({ createTask }) => {
         <textarea
           value={hours}
           onChange={(e) => setHours(e.target.value)}
+        ></textarea>
+      </div>
+
+      <div>
+        <label>Email Address:</label>
+        <textarea
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         ></textarea>
       </div>
 

@@ -9,6 +9,7 @@ const TaskSchema = new mongoose.Schema({
     priority: Number,
     hours: Number,
     category: String,
+    email: String,
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   });
   

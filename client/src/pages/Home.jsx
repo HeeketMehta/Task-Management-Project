@@ -35,13 +35,15 @@ const Home = () => {
   
 
 
-  const createTask = async (task_title, priority, category, hours) => {
+  const createTask = async (task_title, priority, category, hours, email) => {
+    console.log("IN HOME email is  -- ", email)
     try {
       const response = await axios.post('http://localhost:5050/createTask', {
         task_title,
         priority,
         category,
         hours,
+        email,
 
       }, {
         headers: {
