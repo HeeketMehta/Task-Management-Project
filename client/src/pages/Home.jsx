@@ -4,6 +4,8 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import TaskForm from './TaskForm';
 import { ToastContainer, toast } from "react-toastify";
+import Dashboard from './Dashboard';
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -36,7 +38,7 @@ const Home = () => {
 
 
   const createTask = async (task_title, priority, category, hours, email) => {
-    console.log("IN HOME email is  -- ", email)
+
     try {
       const response = await axios.post('http://localhost:5050/createTask', {
         task_title,
@@ -52,6 +54,8 @@ const Home = () => {
       });
   
       console.log('Task created successfully:', response.data);
+
+      navigate(`/dashboard/${email}`,{state:{id:email}});
     } catch (error) {
       console.error('Error creating task:', error);
     }
@@ -61,6 +65,7 @@ const Home = () => {
 
 
   const Logout = () => {
+    
     removeCookie("token");
     navigate("/signup");
   };
@@ -78,6 +83,7 @@ const Home = () => {
         <span>Add a Task</span>
         <TaskForm createTask={createTask} />
         </div> 
+        {/* <Dashboard /> */}
 
         
         <button onClick={Logout}>LOGOUT</button>

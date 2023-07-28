@@ -3,6 +3,11 @@ const Task = require("../Models/TaskModel")
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
 
+const url = require('url');
+const querystring = require('querystring');
+
+
+
 
 module.exports.Signup = async (req, res, next) => {
     try {
@@ -68,7 +73,7 @@ module.exports.Login = async (req, res, next) => {
         httpOnly: false,
         });
 
-        res.status(201).json({ message: "User logged in successfully", success: true });
+        res.status(201).json({ message: "User is logged in successfully", success: true, user: user });
         next()
 
 
@@ -86,16 +91,16 @@ module.exports.Login = async (req, res, next) => {
 module.exports.createTask = async (req, res) => {
     try {
 
-        console.log(req.body)
+
         const { task_title, priority, category, hours, email } = req.body;
 
 
         const existingUser = await User.findOne({ email }, { email: 1, password: 1})
-        console.log(existingUser)
 
 
 
-        console.log("IN THE CREATE TASK SERVER FUNCTION")
+
+        // console.log("IN THE CREATE TASK SERVER FUNCTION")
         const task = await Task.create({
             task_title,
             priority,
@@ -104,6 +109,8 @@ module.exports.createTask = async (req, res) => {
             email,
             user: existingUser,
         });
+
+
 
         res.status(201).json(task);
         
@@ -114,3 +121,27 @@ module.exports.createTask = async (req, res) => {
     }
 
 };
+
+
+
+module.exports.Dashboard = async (req, res) => {
+    try {
+        console.log("IN THE SERVER SIDE OF THE DASHBOARD FUNCTION")
+        const user_email = req.params.email
+        console.log(req.params.email)
+
+
+        const existingUser = await User.findOne({ email: user_email })
+        // const { userId } = req.user; // Assuming you have the authenticated user's ID in the req.user object
+    
+        // Fetch tasks associated with the user
+        console.log("THE EXISTING USER IS ---- ", existingUser);
+        const tasks = await Task.find({user:existingUser});
+        console.log(tasks)
+        res.status(200).json(tasks);
+      } 
+      catch (error) {
+        res.status(500).json({ error: 'Error fetching tasks' });
+      }
+    };
+    
